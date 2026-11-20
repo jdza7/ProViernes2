@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ubika.pe - Publicar Producto</title>
+  <style>
+    /* Estilos generales y optimizados para móviles */
+    body {
+      background-color: #f4f6f8;
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .product-form {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 24px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .product-form h2 {
+      margin-top: 0;
+      color: #111827;
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #374151;
+      font-size: 14px;
+    }
+
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea {
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, 
+    .form-group select:focus, 
+    .form-group textarea:focus {
+      border-color: #25D366;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-group small {
+      margin-top: 4px;
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background-color: #25D366; /* Verde institucional WhatsApp */
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-submit:hover {
+      background-color: #22bf5b;
+    }
+  </style>
+</head>
+<body>
+
+  <form action="guardar-producto.php" method="POST" enctype="multipart/form-data" class="product-form">
+   
+    <h2>🛍️ Publicar en Ubika.pe</h2>
+
+    <!-- 1. Título del Producto -->
+    <div class="form-group">
+      <label for="titulo">Nombre del Producto *</label>
+      <input 
+        type="text" 
+        id="titulo" 
+        name="titulo" 
+        placeholder="Ej: Mocasín de Cuero Vacuno, Cajas 30x40" 
+        required
+      >
+    </div>
+
+    <!-- 2. Categoría -->
+    <div class="form-group">
+      <label for="categoria_id">Categoría *</label>
+      <select id="categoria_id" name="categoria_id" required>
+        <option value="">Selecciona una categoría...</option>
+        <option value="1">Calzado y Cuero</option>
+        <option value="2">Empaques y Embalajes</option>
+        <option value="3">Maquinaria y Repuestos</option>
+        <option value="4">Gastronomía y Menú</option>
+        <option value="5">Ferretería y Construcción</option>
+      </select>
+    </div>
+
+    <!-- 3. Tipo de Precio y Monto -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="tipo_precio">Modalidad de Precio</label>
+        <select id="tipo_precio" name="tipo_precio" onchange="togglePrecioInput(this.value)">
+          <option value="fijo">Precio Fijo (S/)</option>
+          <option value="por_mayor">Precio por Mayor (S/)</option>
+          <option value="a_cotizar">A Cotizar / Consultar</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="precio_wrapper">
+        <label for="precio">Precio (PEN)</label>
+        <input type="number" step="0.50" id="precio" name="precio" placeholder="85.00">
+      </div>
+    </div>
+
+    <!-- 4. Fotografía Principal -->
+
+
+    <!-- 5. Descripción del Producto -->
+    <div class="form-group">
+      <label for="descripcion">Detalles o Especificaciones</label>
+      <textarea 
+        id="descripcion" 
+        name="descripcion" 
+        rows="4" 
+        placeholder="Indica tallas, medidas, colores o mínimos de compra..."
+      ></textarea>
+    </div>
+
+    <!-- Botón de Envío -->
+    <button type="submit" class="btn-submit">
+      🚀 Publicar Producto
+    </button>
+
+  </form>
+
+  <script>
+    // Script simple para ocultar el campo de precio si el comerciante elige "A cotizar"
+    function togglePrecioInput(valor) {
+      const wrapper = document.getElementById('precio_wrapper');
+      const inputPrecio = document.getElementById('precio');
+      
+      if (valor === 'a_cotizar') {
+        wrapper.style.display = 'none';
+        inputPrecio.value = ''; // Limpia el valor
+        inputPrecio.required = false;
+      } else {
+        wrapper.style.display = 'flex';
+        inputPrecio.required = true;
+      }
+    }
+  </script>
+
+</body>
+</html>
